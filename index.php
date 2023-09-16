@@ -1,3 +1,13 @@
+<?php
+include 'DataRequest.php';
+
+$dataRequest = new DataRequest();
+
+$totalClientes = $dataRequest->dadosClientes('c');
+$totalUsuarios = $dataRequest->dadosUsuarios('c');
+$totalFornecedores = $dataRequest->dadosFornecedores('c');
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <!--<![endif]-->
@@ -99,7 +109,7 @@
 							</div>
 							<div class="details">
 								<div class="number">
-									1349
+									<?php echo $totalClientes; ?>
 								</div>
 								<div class="desc">
 									Clientes
@@ -117,7 +127,7 @@
 							</div>
 							<div class="details">
 								<div class="number">
-									549
+								<?php echo $totalUsuarios; ?>
 								</div>
 								<div class="desc">
 									Usuários
@@ -135,7 +145,7 @@
 							</div>
 							<div class="details">
 								<div class="number">
-									89
+								<?php echo $totalFornecedores; ?>
 								</div>
 								<div class="desc">
 									Fornecedores
