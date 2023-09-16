@@ -115,7 +115,7 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 									Clientes
 								</div>
 							</div>
-							<a class="more" href="#">
+							<a class="more" href="#" onclick="mudarCores('#27a9e3', '#9ce8f9')">
 								Visualizar <i class="m-icon-swapright m-icon-white"></i>
 							</a>
 						</div>
@@ -127,13 +127,13 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 							</div>
 							<div class="details">
 								<div class="number">
-								<?php echo $totalUsuarios; ?>
+									<?php echo $totalUsuarios; ?>
 								</div>
 								<div class="desc">
 									Usuários
 								</div>
 							</div>
-							<a class="more" href="#">
+							<a class="more" href="#" onclick="mudarCores('#28b779', '#75ffc3')">
 								Visualizar <i class="m-icon-swapright m-icon-white"></i>
 							</a>
 						</div>
@@ -145,13 +145,13 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 							</div>
 							<div class="details">
 								<div class="number">
-								<?php echo $totalFornecedores; ?>
+									<?php echo $totalFornecedores; ?>
 								</div>
 								<div class="desc">
 									Fornecedores
 								</div>
 							</div>
-							<a class="more" href="#">
+							<a class="more" href="#" onclick="mudarCores('#852b99', '#c9abcf')">
 								Visualizar <i class="m-icon-swapright m-icon-white"></i>
 							</a>
 						</div>
@@ -309,6 +309,15 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 			App.init(); // initlayout and core plugins
 			Index.init();
 		});
+	</script>
+	<script>
+		function mudarCores(corTitulo, corBody) {
+			var titulo = document.querySelector(".portlet-title");
+			var body = document.querySelector(".portlet-body");
+
+			titulo.style.backgroundColor = corTitulo;
+			body.style.backgroundColor = corBody;
+		}
 	</script>
 	<!-- END JAVASCRIPTS -->
 </body>
