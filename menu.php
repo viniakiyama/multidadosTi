@@ -1,3 +1,21 @@
+<?php
+$subItensCad = array(
+    "Cliente",
+    "Fornecedor",
+    "Usuário",
+    "Produtos",
+    "Perfil de Acesso"
+);
+sort($subItensCad);
+
+$subItensRel = array(
+    "Cliente",
+    "Faturamento",
+    "Produtos"
+);
+sort($subItensRel);
+?>
+
 <!-- BEGIN SIDEBAR -->
 <div class="page-sidebar-wrapper">
     <div class="page-sidebar navbar-collapse collapse">
@@ -43,15 +61,11 @@
                     </span>
                 </a>
                 <ul class="sub-menu">
-                    <li>
-                        <a href="#">Cliente</a>
-                    </li>
-                    <li>
-                        <a href="#">Fornecedor</a>
-                    </li>
-                    <li>
-                        <a href="#">Usuário</a>
-                    </li>
+                    <?php foreach ($subItensCad as $subItemCad) : ?>
+                        <li>
+                            <a href="#"><?php echo $subItemCad; ?></a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </li>
             <!--Relatorio-->
@@ -65,12 +79,11 @@
                     </span>
                 </a>
                 <ul class="sub-menu">
-                    <li>
-                        <a href="#">Cliente</a>
-                    </li>
-                    <li>
-                        <a href="#">Faturamento</a>
-                    </li>
+                    <?php foreach ($subItensRel as $subItemRel) : ?>
+                        <li>
+                            <a href="#"><?php echo $subItemRel; ?></a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </li>
         </ul>
