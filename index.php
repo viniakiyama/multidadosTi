@@ -7,6 +7,40 @@ $totalClientes = $dataRequest->dadosClientes('c');
 $totalUsuarios = $dataRequest->dadosUsuarios('c');
 $totalFornecedores = $dataRequest->dadosFornecedores('c');
 ?>
+<?php
+require_once 'DataRequest.php';
+
+$dataRequest = new DataRequest();
+
+if (isset($_POST['tipo'])) {
+	$tipo = $_POST['tipo'];
+	$html = '';
+
+	if ($tipo === 'clientes') {
+		$dados = $dataRequest->dadosClientes();
+	} elseif ($tipo === 'usuarios') {
+		$dados = $dataRequest->dadosUsuarios();
+	} elseif ($tipo === 'fornecedores') {
+		$dados = $dataRequest->dadosFornecedores();
+	}
+
+	foreach ($dados as $indice => $item) {
+		$html .= '<tr>';
+		$html .= '<td>' . ($indice + 1) . '</td>';
+		$html .= '<td>' . $item['nome'] . '</td>';
+		$html .= '<td>' . $item['cpf'] . '</td>';
+		$html .= '<td>' . $item['endereco'] . '</td>';
+		$html .= '<td>' . $item['telefone'] . '</td>';
+		$html .= '<td>' . $item['usuario'] . '</td>';
+		$html .= '<td>' . $item['email'] . '</td>';
+		$html .= '</tr>';
+	}
+
+	echo $html;
+	exit;
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -115,9 +149,11 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 									Clientes
 								</div>
 							</div>
-							<a class="more" href="#" onclick="mudarCores('#27a9e3', '#9ce8f9')">
-								Visualizar <i class="m-icon-swapright m-icon-white"></i>
+
+							<a class="more" href="#" onclick="visualizarClientes()">
+								Visualizar<i class="m-icon-swapright m-icon-white"></i>
 							</a>
+
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -133,9 +169,11 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 									Usuários
 								</div>
 							</div>
-							<a class="more" href="#" onclick="mudarCores('#28b779', '#75ffc3')">
-								Visualizar <i class="m-icon-swapright m-icon-white"></i>
+
+							<a class="more" href="#" onclick="visualizarUsuarios()">
+								Visualizar<i class="m-icon-swapright m-icon-white"></i>
 							</a>
+
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -151,9 +189,11 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 									Fornecedores
 								</div>
 							</div>
-							<a class="more" href="#" onclick="mudarCores('#852b99', '#c9abcf')">
-								Visualizar <i class="m-icon-swapright m-icon-white"></i>
+
+							<a class="more" href="#" onclick="visualizarFornecedores()">
+								Visualizar<i class="m-icon-swapright m-icon-white"></i>
 							</a>
+
 						</div>
 					</div>
 				</div>
@@ -198,7 +238,7 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 												</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="tabela-dados">
 											<tr>
 												<td>
 													1
@@ -306,7 +346,7 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 	<!-- END PAGE LEVEL SCRIPTS -->
 	<script>
 		jQuery(document).ready(function() {
-			App.init(); // initlayout and core plugins
+			App.init();
 			Index.init();
 		});
 	</script>
@@ -319,6 +359,71 @@ $totalFornecedores = $dataRequest->dadosFornecedores('c');
 			body.style.backgroundColor = corBody;
 		}
 	</script>
+
+	<script>
+		function visualizarClientes() {
+			mudarCores('#27a9e3', '#9ce8f9');
+			atualizarCabecalho('clientes');
+			$.ajax({
+				type: 'POST',
+				url: 'DataRequest.php',
+				data: {
+					tipo: 'clientes'
+				},
+				success: function(data) {
+					$('#tabela-dados').html(data);
+				}
+			});
+		}
+
+		function visualizarUsuarios() {
+			mudarCores('#28b779', '#75ffc3');
+			atualizarCabecalho('usuarios');
+			$.ajax({
+				type: 'POST',
+				url: 'DataRequest.php',
+				data: {
+					tipo: 'usuarios'
+				},
+				success: function(data) {
+					$('#tabela-dados').html(data);
+				}
+			});
+		}
+
+		function visualizarFornecedores() {
+			mudarCores('#852b99', '#c9abcf');
+			atualizarCabecalho('fornecedores');
+			$.ajax({
+				type: 'POST',
+				url: 'DataRequest.php',
+				data: {
+					tipo: 'fornecedores'
+				},
+				success: function(data) {
+					$('#tabela-dados').html(data);
+				}
+			});
+		}
+
+		function atualizarCabecalho(tipo) {
+			var cabecalho = '<tr><th>#</th>';
+
+			if (tipo === 'clientes') {
+				cabecalho += '<th>Nome</th><th>CPF</th><th>Endereço</th><th>Telefone</th><th>Email</th>';
+			} else if (tipo === 'usuarios') {
+				cabecalho += '<th>Nome</th><th>CPF</th><th>Endereço</th><th>Telefone</th><th>Usuário</th>';
+			} else if (tipo === 'fornecedores') {
+				cabecalho += '<th>Nome</th><th>CPF</th><th>Cidade</th><th>Email</th>';
+			}
+
+			cabecalho += '</tr>';
+
+			$('#tabela-dados thead').html(cabecalho);
+		}
+	</script>
+
+
 	<!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

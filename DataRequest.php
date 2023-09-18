@@ -150,3 +150,40 @@ class DataRequest {
         }
     }
 }
+
+
+
+require_once 'DataRequest.php';
+
+$dataRequest = new DataRequest();
+
+if (isset($_POST['tipo'])) {
+    $tipo = $_POST['tipo'];
+    $html = '';
+
+    // Determine which data to retrieve based on the 'tipo' parameter
+    if ($tipo === 'clientes') {
+        $dados = $dataRequest->dadosClientes();
+    } elseif ($tipo === 'usuarios') {
+        $dados = $dataRequest->dadosUsuarios();
+    } elseif ($tipo === 'fornecedores') {
+        $dados = $dataRequest->dadosFornecedores();
+    }
+
+    // Generate HTML for the table rows based on the data
+    foreach ($dados as $indice => $item) {
+        $html .= '<tr>';
+        $html .= '<td>' . ($indice + 1) . '</td>';
+        $html .= '<td>' . $item['nome'] . '</td>';
+        $html .= '<td>' . $item['cpf'] . '</td>';
+        $html .= '<td>' . $item['endereco'] . '</td>';
+        $html .= '<td>' . $item['telefone'] . '</td>';
+        $html .= '<td>' . $item['email'] . '</td>';
+        $html .= '</tr>';
+    }
+
+    echo $html;
+    exit;
+}
+
+
