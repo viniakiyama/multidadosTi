@@ -161,7 +161,6 @@ if (isset($_POST['tipo'])) {
     $tipo = $_POST['tipo'];
     $html = '';
 
-    // Determine which data to retrieve based on the 'tipo' parameter
     if ($tipo === 'clientes') {
         $dados = $dataRequest->dadosClientes();
     } elseif ($tipo === 'usuarios') {
@@ -170,7 +169,6 @@ if (isset($_POST['tipo'])) {
         $dados = $dataRequest->dadosFornecedores();
     }
 
-    // Generate HTML for the table rows based on the data
     foreach ($dados as $indice => $item) {
         $html .= '<tr>';
         $html .= '<td>' . ($indice + 1) . '</td>';
